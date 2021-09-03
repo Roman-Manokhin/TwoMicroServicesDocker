@@ -1,0 +1,1 @@
+powershell -NoProfile -command "((Get-Content 'mvnw') -join \"`n\") + \"`n\" | Set-Content -NoNewline 'mvnw1'"
