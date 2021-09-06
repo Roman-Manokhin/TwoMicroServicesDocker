@@ -15,23 +15,18 @@ public class SocialServiceImpl implements SocialService {
     private final SocialRepository socialRepository;
 
     @Override
-    public Social incrementSocialCount(Long id, Boolean inc) {
-        Optional<Social> socialOptional = socialRepository.getSocialByGameId(id);
-        Social social;
+    public synchronized Social incrementSocialCount(Long id, Boolean inc) {
+        Optional<Social> social = socialRepository.getSocialByGameId(id);
         if (inc) {
-            if (socialOptional.isEmpty()) {
-                social = new Social(1L, id);
+            if (social.isEmpty()) {
+                social = Optional.of(new Social(1L, id));
             } else {
-                social = socialOptional.get();
-                social.increment();
+                social.get().increment();
             }
-            return socialRepository.save(social);
-        } else {
-            return socialRepository.getSocialByGameId(id).get();
+            return socialRepository.save(social.get());
         }
-
+        return social.get();
     }
-
 
 
 }
