@@ -18,7 +18,7 @@ public class Social {
     @NonNull
     private Long count;
     @NonNull
-    private Long gameId;
+    private Long gameItemId;
 
     public void increment(){
         count++;
